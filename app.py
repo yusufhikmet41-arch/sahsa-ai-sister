@@ -1,9 +1,6 @@
 import os
 import requests
 import streamlit as st
-import os
-import requests
-import streamlit as st
 
 # Sayfa Yapılandırması
 st.set_page_config(
@@ -28,9 +25,9 @@ st.markdown(
 )
 
 # --- AYARLAR VE API ---
-# Groq API Anahtarını Buraya Yaz
+# xai-KNvVLWxuSM1QUXfzQNBYvMi1jLO19VpbSvSKRXx3lmtm9kEcdcoUATmxthWt3thvQAbptYlmP8uG6Exj
 GROQ_API_KEY = os.environ.get(
-    "GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "gsk_SeninGroqApiAnahtarın")
+    "GROQ_API_KEY", "xai-KNvVLWxuSM1QUXfzQNBYvMi1jLO19VpbSvSKRXx3lmtm9kEcdcoUATmxthWt3thvQAbptYlmP8uG6Exj
 )
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
@@ -66,6 +63,7 @@ st.divider()
 
 # --- SOHBET GEÇMİŞİ BAŞLATMA ---
 if "messages" not in st.session_state:
+  # İlk Açılış Kurgusu ve Görselleri
   initial_story = """
 Öğleden sonra eve geldiğinizde üvey kız kardeşiniz Sasha'yı küçük siyah bir elbiseyle kanepede uzanmış, dışarı çıkmak için hazırlanmış halde bulursunuz.
 
@@ -130,10 +128,12 @@ for msg in st.session_state.messages:
 
 # --- KULLANICI GİRDİSİ VE API SÜRECİ ---
 if user_input := st.chat_input("Sasha'ya cevap ver..."):
+  # Kullanıcı Mesajını Ekle
   st.session_state.messages.append({"role": "user", "content": user_input})
   with st.chat_message("user"):
     st.markdown(user_input)
 
+  # Groq API Payload Yapılandırması
   headers = {
       "Authorization": f"Bearer {GROQ_API_KEY}",
       "Content-Type": "application/json",
@@ -142,7 +142,7 @@ if user_input := st.chat_input("Sasha'ya cevap ver..."):
   payload = {
       "model": "llama-3.3-70b-versatile",
       "messages": st.session_state.messages,
-      "temperature": 0.85,
+      "temperature": 0.85,  # Karakterin doğal ve spontane konuşması için yüksek yaratıcılık
       "max_tokens": 1000,
   }
 
@@ -160,7 +160,7 @@ if user_input := st.chat_input("Sasha'ya cevap ver..."):
           )
         else:
           err_msg = res_json.get("error", {}).get(
-              "message", "."
+              "message", "API Hatası oluştu."
           )
           st.error(f"Hata: {err_msg}")
       except Exception as e:
