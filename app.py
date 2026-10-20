@@ -25,9 +25,9 @@ st.markdown(
 )
 
 # --- AYARLAR VE API ---
-# xai-KNvVLWxuSM1QUXfzQNBYvMi1jLO19VpbSvSKRXx3lmtm9kEcdcoUATmxthWt3thvQAbptYlmP8uG6Exj
+# https://api.x.ai/v1/responses
 GROQ_API_KEY = os.environ.get(
-    "GROQ_API_KEY", "xai-KNvVLWxuSM1QUXfzQNBYvMi1jLO19VpbSvSKRXx3lmtm9kEcdcoUATmxthWt3thvQAbptYlmP8uG6Exj
+    "GROQ_API_KEY", "https://api.x.ai/v1/responses
 )
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
