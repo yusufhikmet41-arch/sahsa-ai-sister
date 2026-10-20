@@ -27,7 +27,7 @@ st.markdown(
 # --- AYARLAR VE API ---
 # Groq API Anahtarını Buraya Yaz
 GROQ_API_KEY = os.environ.get(
-    "GROQ_API_KEY", "BURAYA_GROQ_API_ANAHTARINI_YAZIN"
+    "GROQ_API_KEY", "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"
 )
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
