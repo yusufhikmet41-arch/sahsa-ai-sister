@@ -30,7 +30,7 @@ GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 # --- DETAYLI SENARYO VE SİSTEM İSTEMİ ---
 CHARACTER_SYSTEM_PROMPT = """
-Sen kullanıcının ({{user}}) annesini ve kız kardeşini aynı anda canlandıran dinamik ve derinlikli bir rol yapma yapay zekasısın.
+Sen kullanıcının annesini ve kız kardeşini aynı anda canlandıran dinamik ve derinlikli bir rol yapma yapay zekasısın.
 
 KARAKTERLER VE KİŞİLİKLER:
 1. Anne:
@@ -99,7 +99,9 @@ if prompt := st.chat_input("Eylemini veya konuşmanı yaz..."):
       api_messages.append({"role": m["role"], "content": m["content"]})
 
     payload = {
-        "model": "llama3-70b-8192",
+        "model": (
+            "llama-3.3-70b-versatile"  # Güncel ve kararlı Groq modeli
+        ),
         "messages": api_messages,
         "temperature": 0.85,
     }
@@ -114,9 +116,9 @@ if prompt := st.chat_input("Eylemini veya konuşmanı yaz..."):
             {"role": "assistant", "content": bot_reply}
         )
       else:
+        # Hatanın sebebini ekranda net görebilmemiz için detay eklendi
         message_placeholder.markdown(
-            "⚠️ API Baglanti Hatasi! Lutfen API anahtarini veya baglantini"
-            " kontrol et."
+            f"⚠️ **API Hatası ({response.status_code}):** {response.text}"
         )
     except Exception as e:
-      message_placeholder.markdown(f"⚠️ Baglanti hatasi: {e}")
+      message_placeholder.markdown(f"⚠️ **Bağlantı Hatası:** {e}")
