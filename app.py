@@ -99,9 +99,7 @@ if prompt := st.chat_input("Eylemini veya konuşmanı yaz..."):
       api_messages.append({"role": m["role"], "content": m["content"]})
 
     payload = {
-        "model": (
-            "llama-3.3-70b-versatile"  # Güncel ve kararlı Groq modeli
-        ),
+        "model": "llama-3.1-8b-instant",  # Groq'un en aktif çalışan modeli
         "messages": api_messages,
         "temperature": 0.85,
     }
@@ -116,7 +114,6 @@ if prompt := st.chat_input("Eylemini veya konuşmanı yaz..."):
             {"role": "assistant", "content": bot_reply}
         )
       else:
-        # Hatanın sebebini ekranda net görebilmemiz için detay eklendi
         message_placeholder.markdown(
             f"⚠️ **API Hatası ({response.status_code}):** {response.text}"
         )
