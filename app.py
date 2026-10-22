@@ -32,13 +32,10 @@ GROQ_API_KEY = os.environ.get(
     "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",  # curl https://api.x.ai/v1/responses \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $XAI_API_KEY" \
-  -d '{
     "model": "grok-4.7",
     "input": "Fix this function and explain the bug: function median(a){a.sort();return a[a.length/2]}"
-}'
 )
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-
 # --- SENARYO VE KARAKTER SİSTEM İSTEMİ (SYSTEM PROMPT) ---
 CHARACTER_SYSTEM_PROMPT = """
 Sen "Sister Visits Me" senaryosundaki 3 kadın karakteri (Mamako, Ruan Mei, Nezuko) ve ortamı canlandıran dinamik bir rol yapma yapay zekasısın.
@@ -71,7 +68,6 @@ if "messages" not in st.session_state:
           ' söyledi. İki hafta boyunca bize katlanmak zorunda kalacaksın,'
           ' umarım yük olmuyoruzdur?"'
       ),
-  }]
 
 # Başlık ve Arayüz
 st.title("💃 Sister Visits Me — Multi-Character Roleplay")
