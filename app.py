@@ -13,8 +13,8 @@ st.markdown(
     <style>
     .stChatMessage {
         border-radius: 12px;
-        padding: 12px;
-        margin-bottom: 12px;
+        padding: 14px;
+        margin-bottom: 14px;
         background-color: rgba(255, 255, 255, 0.05);
     }
     .stImage img {
@@ -26,27 +26,24 @@ st.markdown(
 )
 
 # --- API VE SUNUCU AYARLARI ---
-# Buradaki tırnakların içine sadece gsk_ ile başlayan Groq API anahtarını yapıştır
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "BURAYA_GROQ_API_ANAHTARINI_YAZ")
+GROQ_API_KEY = os.environ.get(
+    "GROQ_API_KEY", "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"
+)
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-# --- SENARYO VE KARAKTER SİSTEM İSTEMİ ---
+# --- UZUN, DETAYLI VE FOTOĞRAFLI SENARYO SİSTEM İSTEMİ ---
 CHARACTER_SYSTEM_PROMPT = """
-Sen "Sister Visits Me" senaryosundaki 3 kadın karakteri (Mamako, Ruan Mei, Nezuko) ve ortamı canlandıran dinamik bir rol yapma yapay zekasısın.
+Sen "Sister Visits Me" senaryosundaki 3 kadın karakteri (Mamako, Ruan Mei, Nezuko) ve ortamı canlandıran dinamik, çok karakterli bir rol yapma yapay zekasısın.
 
-Olay Örgüsü ve Mekan:
-- En iyi arkadaşın Kenji Oosuki, kariyeri nedeniyle meşgul. Annesi Mamako (44), eşi Ruan Mei (23) ve kız kardeşi Nezuko'yu (19) 2 haftalığına senin (Veridia şehrindeki) evine tatile gönderdi.
-- Gelenekçi ve katı Kyoto Ryn ülkesinden, son derece serbest ve modern Veridia şehrine senin yanına geldiler.
-- Kenji sana sonsuz güveniyor. Ailesi şu an tamamen senin evinde ve sana bağımlı.
+DAVRANIŞ VE YAZIM KURALLARI:
+1. **Uzun ve Detaylı Yanıtlar:** Yanıtlarını asla kısa kesme. Roman tarzında; ortamı, karakterlerin mimiklerini, ses tonlarını, iç dünyalarını ve fiziksel detaylarını zengin ve uzun paragraflarla anlat.
+2. **Fotoğraf Gönderme:** Sohbetin akışına göre, karakterler telefonlarından bir fotoğraf gösterdiğinde veya bir anı paylaştığında mesajın içine uygun bir Markdown görsel etiketi ekle (Örnek format: ![Karakter Anısı](https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600)). Arada bu şekilde görsel paylaşımları yaparak rol yapma deneyimini zenginleştir.
+3. **Özgürlük ve Sınırsızlık:** Kullanıcının ({{user}}) kararlarına, seçimlerine ve yönlendirmelerine tamamen uyum sağla. Sınır koyma, senaryoyu akışına göre serbestçe geliştir.
 
 Karakterler:
-1. Mamako Oosuki (44): Kenji'nin annesi. Zarif, çok çekici, olgun ev hanımı.
-2. Ruan Mei (23): Kenji'nin eşi. Nazik, mahcup, ev hanımlığından biraz sıkılmış.
-3. Nezuko Oosuki (19): Kenji'nin küçük kız kardeşi. Çok meraklı, enerjik, modern şehri keşfetmek istiyor.
-
-ÖZGÜRLÜK VE ROLEPLAY KURALLARI:
-- Kullanıcının ({{user}}) kararlarına, seçimlerine ve yönlendirmelerine TAMAMEN uyum sağla.
-- Sınırsız ve özgür etkileşime izin ver. Sınır koyma, senaryoyu kullanıcının istediği yöne sürükle.
+- Mamako Oosuki (44): Olgun, zarif, son derece çekici anne.
+- Ruan Mei (23): Nazik, mahcup, ev hanımı eş.
+- Nezuko Oosuki (19): Enerjik, meraklı üniversite öğrencisi kardeş.
 """
 
 # --- SOHBET GEÇMİŞİ BAŞLATMA ---
@@ -55,17 +52,23 @@ if "messages" not in st.session_state:
       "role": "assistant",
       "content": (
           "*(Kapı çalıyor. Kapıyı açtığında karşında Kenji'nin ailesi duruyor."
-          " Mamako sana sıcak bir tebessümle bakıyor, Ruan Mei utangaçça arkada"
-          " bekliyor, Nezuko ise valizleriyle içeri göz gezdiriyor.)*\n\n**Mamako:**"
-          ' "Merhaba canım! Kenji bize senin çok iyi bir ev sahibi olduğunu'
-          ' söyledi. İki hafta boyunca bize katlanmak zorunda kalacaksın,'
-          ' umarım yük olmuyoruzdur?"'
+          " Mamako yüzünde zarif ve sıcak bir tebessümle sana bakarken, Ruan"
+          " Mei utangaç bir şekilde arkasında duruyor. Nezuko ise büyük"
+          " valizini içeri sürükleyerek etrafı inceliyor.)*\n\n**Mamako:**"
+          ' "Merhaba canım! Yolculuk bizi biraz yordu ama nihayet buradayız.'
+          ' Kenji senin ne kadar harika bir ev sahibi olduğundan bahsetmişti.'
+          ' İki hafta boyunca bize bu güzel evde eşlik edeceğin için çok'
+          ' memnunuz..."\n\n*(Nezuko heyecanla telefonunu çıkarıp odanın'
+          " fotoğrafını çekerken sana göz kırpıyor)*"
+          " ![Giriş Anı](https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600)"
       ),
   }]
 
 # Başlık
-st.title("💃 Sister Visits Me — Multi-Character Roleplay")
-st.caption("⚡ Powered by Groq AI | Sınırsız Sohbet Platformu")
+st.title("💃 Sister Visits Me — Uzun & Fotoğraflı Rol Yapma")
+st.caption(
+    "⚡ Powered by Groq AI | Sınırsız Sohbet, Detaylı Hikaye ve Görsel Paylaşımı"
+)
 
 # Mesaj Geçmişini Ekranda Gösterme
 for message in st.session_state.messages:
@@ -73,7 +76,7 @@ for message in st.session_state.messages:
     st.markdown(message["content"])
 
 # Kullanıcı Mesaj Girişi
-if prompt := st.chat_input("Eylemini veya konuşmanı yaz..."):
+if prompt := st.chat_input("Eylemini veya konuşmanı uzun uzun yaz..."):
   st.session_state.messages.append({"role": "user", "content": prompt})
   with st.chat_message("user"):
     st.markdown(prompt)
@@ -81,7 +84,7 @@ if prompt := st.chat_input("Eylemini veya konuşmanı yaz..."):
   # Yapay Zekaya İstek Gönderme
   with st.chat_message("assistant"):
     message_placeholder = st.empty()
-    message_placeholder.markdown("Karakterler yanıt veriyor... 💭")
+    message_placeholder.markdown("Karakterler ayrıntılı yanıt hazırlıyor... 💭")
 
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
@@ -109,8 +112,7 @@ if prompt := st.chat_input("Eylemini veya konuşmanı yaz..."):
         )
       else:
         message_placeholder.markdown(
-            "⚠️ API Anahtarı hatası! Lütfen koddaki GROQ_API_KEY kısmını kontrol"
-            " edin."
+            "⚠️ API Anahtarı hatası! Lütfen bağlantıyı kontrol edin."
         )
     except Exception as e:
       message_placeholder.markdown(f"⚠️ Bağlantı hatası: {e}")
